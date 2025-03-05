@@ -1,0 +1,107 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e0f7fa; /* Например, светлый небесно-голубой цвет */
+    color: #333;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, #7cffc2d8, #23f995);
+    padding: 15px 30px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    color: #3b0056;
+    font-family: 'Garamond', 'Brush Script MT', cursive;
+}
+
+.logo-image {
+    width: 40px; 
+    margin-right: 10px;
+}
+
+.nav-menu {
+    display: flex;
+}
+
+.nav-menu li {
+    margin: 0 15px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #3b0056;
+    transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+    color: #6aff8d;
+}
+
+.menu-toggle {
+    display: none; /* Скрываем, если не нужно */
+    cursor: pointer;
+}
+
+h1, h2 {
+    color: #3b0056;
+    text-align: center;
+}
+
+#search {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.search-container input {
+    padding: 15px; /* Увеличиваем отступы */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 300px; /* Увеличиваем ширину строки поиска */
+}
+
+.search-container input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.search-container select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.search-button {
+    background-color: #8aff6a;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 15px;
+}
+
+.search-icon {
+    width: 20px; /* Установите размер иконки лупы */
+}
+
+.centered-section {
+    text-align: center;
+    margin: 20px 0;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #23f995;
+    color: white;
+}
