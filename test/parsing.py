@@ -1,8 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 
-url = "https://www.petshop.ru/"  # Замените на ваш URL
-search_word = "собаки"  # Это слово, которое мы ищем
+url = "https://www.petshop.ru/"
+search_word = "собаки"  # слово, которое мы ищем
 
 response = requests.get(url)
 if response.status_code == 200:
@@ -17,7 +17,6 @@ if response.status_code == 200:
         while start != -1:  # Пока мы находим вхождения
             found = True
             end = start + len(search_word)
-            print(f'Найдено слово "{search_word}" в теге <{tag.name}>: "{text[start:end]}" (позиция {start})')
 
             # Если тег имеет ссылку, переходим по ней
             link = tag.find('a', href=True)

@@ -1,56 +1,51 @@
-from collections import Counter
+import requests
+from bs4 import BeautifulSoup
 
 
-def decrypt_caesar(text, shift):
-    decrypted_text = ""
-    for char in text:
-        if 'А' <= char <= 'Я':
-            decrypted_char = chr((ord(char) - ord('А') - shift) % 32 + ord('А'))
-            decrypted_text += decrypted_char
-        else:
-            decrypted_text += char  # Оставляем символы, не входящие в диапазон
-    return decrypted_text
+def get_pet_food_data(brand, food_type, pet_type):
+    url = "https://www.petshop.ru/"
+    params = {
+        'brand': brand,
+        'type': food_type,
+        'pet': pet_type
+    }
+
+    response = requests.get(url, params=params)
+
+    if response.status_code != 200:
+        print(f"Ошибка при запросе: {response.status_code}")
+        return
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Здесь вы должны определить, как найти товары на странице.
+    # Например, предполагая, что товары находятся в элементе с классом 'product':
+    products = soup.find_all(class_='product')  # Замените 'product' на истинный класс товара на сайте
+
+    results = []
+
+    for product in products:
+        name = product.find(class_='product-name').text.strip()  # Проверить правильный класс
+        weight = product.find(class_='product-weight').text.strip()  # Проверить правильный класс
+        price = product.find(class_='product-price').text.strip()  # Проверить правильный класс
+
+        results.append({
+            'name': name,
+            'weight': weight,
+            'price': price
+        })
+
+    if results:
+        print("Найденные товары:")
+        for item in results:
+            print(f"Название: {item['name']}, Вес: {item['weight']}, Цена: {item['price']}")
+    else:
+        print("Нет найденных товаров по заданным критериям.")
 
 
-def analyze_frequencies(text):
-    # Убираем пробелы и считаем частоту букв
-    text = text.replace(" ", "")
-    frequency = Counter(text)
-    return frequency
+# Запрос на ввод у пользователя
+brand_input = input("Введите бренд корма: ")
+food_type_input = input("Введите тип корма (сухой/влажный): ")
+pet_type_input = input("Для кого корм (кошка/собака): ")
 
-
-def find_best_shift(text):
-    best_shift = -1
-    highest_score = 0
-
-    for shift in range(1, 33):
-        decrypted = decrypt_caesar(text, shift)
-        freq = analyze_frequencies(decrypted)
-
-        # Сравниваем с типичной частотой букв
-        score = sum(freq.get(char, 0) / len(decrypted) for char in 'ОЕАИНТ')
-
-        if score > highest_score:
-            highest_score = score
-            best_shift = shift
-
-    return best_shift
-
-
-# Исходный текст
-text = """\
-ЬыыТввАывЩфвОсаРфыПцуУфы выЁыйСцуВыв фыЯвыСйуЙорАрвРцуАыфТыоСыл
-выЯывСвцЙдлАыкВлоАотДоаСло длЕждНэж щшЫзщТгк зэОшгНре
-шуОгшНгнЖврОгнЛраСип ынДовОнкКрп евЙпыИнаШраОнеРыиОитХвн нтЬвтТарАивСфыИраПра
-"""
-
-# Находим наилучший сдвиг
-best_shift = find_best_shift(text)
-
-# Расшифровываем с наилучшим сдвигом
-if best_shift != -1:
-    decrypted_text = decrypt_caesar(text, best_shift)
-    print(f'Наилучший сдвиг: {best_shift}')
-    print('Расшифрованный текст:', decrypted_text)
-else:
-    print("Правильный сдвиг не найден.")
+get_pet_food_data(brand_input, food_type_input, pet_type_input)
